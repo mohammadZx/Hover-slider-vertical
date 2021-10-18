@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .slider-updown-container{
+            display: flex;
+            align-items: center;
+            background: purple;
+        }
+        .img-box{
+            z-index: 3;
+        }
+        .img-contain{
+            position: relative;
+            overflow: hidden;
+            width: 500px;
+            height: 700px;
+            transition: .5s all;
+           
+        }
+
+        .img-contain img{
+            position: absolute;
+            left: 0;
+            max-width: 100%;
+            transition: 1s all;
+            z-index: 3;
+        }
+        .img-contain img:not(.active){
+            top: -100%;
+        }
+        .img-contain img.active{
+            top: 0%;
+            transition: .5s all;
+        }
+        .img-contain .active ~ img{
+            top: 100%;
+        }
+        .slider-updown-container .item-box .items{
+            list-style: none;
+            padding: 0;
+            margin-left: -60px;
+        }
+        .slider-updown-container .item-box{
+            z-index: 34;
+
+        }
+        .slider-updown-container .item-box .items li:not(:nth-child(1)){
+            margin-top: 20px
+        }
+        .slider-updown-container .item-box .items li a{
+            font-size: 80px;
+            color: #fff;
+            text-decoration: none;
+            transition: .5s all;
+        }
+        .slider-updown-container .item-box .items li a:hover{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider-updown-container">
+        <div class="image-box">
+            <div class="img-contain">
+                <img src="https://images.prismic.io/zorbagroup/c1134503-44aa-4b23-bca0-34f9209018b2_Biotherm_Life_plankton_pack.png?auto=compress%2Cformat&rect=6%2C0%2C1165%2C1568&w=800&h=1050" class="active" alt="">
+                <img src="https://images.prismic.io/zorbagroup/72cfc9f8-ad34-45ed-87a7-8370f6351bbd_Mole%CC%81cule+instruments+%C2%A9Vincent+Bonnemazou.jpg?auto=compress%2Cformat&rect=302%2C0%2C2018%2C2717&w=800&h=1050" alt="">
+                <img src="https://images.prismic.io/zorbagroup/12e13fba-75c4-4715-8e19-7a280e4fee26_ESSILOR_AVA_STILL_1.png?auto=compress%2Cformat&rect=358%2C0%2C802%2C1080&w=800&h=1050" alt="">
+                <img src="https://images.prismic.io/zorbagroup/2d0155c6-4b38-475a-b201-0d272f312606_SHISEIDO_ULTIMUNE_IMAGE3.png?auto=compress%2Cformat&rect=126%2C0%2C802%2C1080&w=800&h=1050" alt="">
+            </div>
+        </div>
+        <div class="item-box">
+            <ul class="items">
+                <li><a href="#" data-image="1">Item two</a></li>
+                <li><a href="#" data-image="2">Item three</a></li>
+                <li><a href="#" data-image="3">Item one</a></li>
+                <li><a href="#" data-image="4">Item four</a></li>
+            </ul>
+        </div>
+    </div>
+    
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+        
+        $(document).ready(function(){
+            var oldElH = 1;
+            var topFl = 1;
+           $('.item-box .items li a').on('mouseover', function(){
+                $('.img-contain img').removeClass('active');
+                $('.img-contain img:nth-child('+ $(this).attr('data-image') +')').addClass('active');
+                if(oldElH > parseInt($(this).attr('data-image'))){
+                    topFl-=45;
+                }else{
+                    if(oldElH != parseInt($(this).attr('data-image'))) topFl+=45;
+                }
+                $('.img-contain').css('transform', 'translateY(' + topFl + 'px)');
+                oldElH = parseInt($(this).attr('data-image'));
+           })
+        })
+    </script>
+</body>
+</html>
